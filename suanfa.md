@@ -360,3 +360,52 @@ public class SelectionSort extends baseSort {
     }
 }
 ```
+
+```
+// Insertion
+class Insertion extends baseSort {
+    @Override
+    protected void sort(Comparable[] arr) {
+        int N = arr.length;
+        for (int i = 1; i < N; i++) {
+            for (int j = i; j > 0 && less(arr[j], arr[j-1]); j--)
+                exch(arr, j, j-1);
+        }
+    }
+}
+
+// Shell alg
+public class Shell extends baseSort {
+    public static void sort(Comparable[] arr) {
+        int N = arr.length;
+        int h = 1;
+        while(h < N/3) {
+            h = 3*h + 1;
+        }
+        while(h >= 1) {
+            for (int i = h; i < N; i++) {
+                for (int j = i; j >= h && less(arr[j], arr[j-h]); j -= h) {
+                    exch(arr, j, j-h);
+                }
+            }
+            h /= 3;
+        }
+    }
+}
+
+// Merge sort
+public static void merge(Comparable[] arr, int low, int mid, int high) {
+    int i = low, j = mid + 1;
+
+    for (int k = low; k <= high; k++) {
+        auk[k] = arr[k];
+    }
+
+    for (int k = low; k <= high; k++) {
+        if (j > mid)                    arr[k] = auk[j++];
+        else if (j > high)              arr[k] = auk[j++];
+        else if (less(auk[j], auk[i]))  arr[k] = auk[j++];
+        else                            arr[k] = auk[i++];
+    }
+}
+```
