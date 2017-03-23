@@ -130,7 +130,7 @@ public class FixedCapacityStack<Item>
     private int N = 0;
 
     public Iterator<Item> iterator() {
-        return new
+
     }
 
     public boolean isEmpty() {
@@ -395,17 +395,88 @@ public class Shell extends baseSort {
 
 // Merge sort
 public static void merge(Comparable[] arr, int low, int mid, int high) {
-    int i = low, j = mid + 1;
+    int i = low, j = mid + 1;   // i for left part begin, j is the right part begin.
 
     for (int k = low; k <= high; k++) {
-        auk[k] = arr[k];
+        aux[k] = arr[k];
     }
 
     for (int k = low; k <= high; k++) {
-        if (j > mid)                    arr[k] = auk[j++];
-        else if (j > high)              arr[k] = auk[j++];
-        else if (less(auk[j], auk[i]))  arr[k] = auk[j++];
-        else                            arr[k] = auk[i++];
+        if      (i > mid)               arr[k] = aux[j++]; // The left part is used
+        else if (j > high)              arr[k] = aux[i++]; // The right part is used
+        else if (less(aux[j], aux[i]))  arr[k] = aux[j++];
+        else                            arr[k] = aux[i++];
+    }
+}
+
+public class Merge {
+    private static Comparable[] aux;
+
+    public static void sort(Comparable[] arr) {
+        aux = new Comparable[arr.length];
+        sort(arr, 0, a.length-1);
+    }
+
+    private static void sort(Comparable[] arr, int low, int high) {
+        if (high <= low)    return;
+        int mid = low + (high - low) / 2;
+        sort(arr, low, mid);    // Sort the left slide
+        sort(arr, mid+1, high); // Sort the right part
+        merge(arr, low, mid, high);
+    }
+}
+
+class MergeBU {
+    private static Comparable[] aux;
+    public static void sort(Comparable[] arr) {
+        int N = arr.length;
+        aux = new Comparable[N];
+
+        for (int sz = 1; sz < N; sz = sz + sz) {
+            for (int low = 0; low < N-sz; low += sz+sz) {
+                merge(arr, low, low+sz-1, Math.min(low+sz+sz-1, N-1));
+            }
+        }
+    }
+}
+
+class Quick {
+    public static void sort(Comparable[] arr) {
+        StdRandom.shuffle(arr);
+        sort(arr, 0, a.length-1);
+    }
+
+    private static void sort(Comparable[] arr, int low, int high) {
+        if (low >= high)    return;
+        int j = partition(arr, low, high);
+        sort(arr, low, j - 1);
+        sort(arr, j+1, high);
+    }
+}
+
+class Quick3way extends baseSort {
+    @Override
+    public void sort(Comparable[] arr) {
+        sort(arr, 0, arr.length-1);
+    }
+
+    private void sort(Comparable[] arr, int low, int high) {
+        if (high <= low)
+            return;
+        int lt = low, i = low+1, gt = high;
+        Comparable v = arr[low];
+
+        while (i < gt) {
+            int cmp = arr[i].compareTo(v);
+            if (cmp < 0)
+                exch(arr, lt++, i++);
+            else if (cmp > 0)
+                exch(arr, i, gt--);
+            else
+                i++;
+        }
+        sort(arr, low, lt-1);
+        sort(arr, gt+1, high);
     }
 }
 ```
