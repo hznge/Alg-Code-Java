@@ -194,7 +194,7 @@ public class Stack<Item>
         N++;
     }
 
-    public void pop() {
+    public Item pop() {
         Item item = first.item;
         first = first.next;
         N--;
@@ -213,7 +213,7 @@ public class Queue<Item>
     }
 
     public boolean isEmpty() {
-        return N == null;
+        return N == 0;
     }
 
     public int size() {
