@@ -452,6 +452,30 @@ class Quick {
         sort(arr, low, j - 1);
         sort(arr, j+1, high);
     }
+
+    private static int partition(Comparable[] arr, int low, int high) {
+        int i = low, j = high + 1; // 左右扫描指针
+        Comparable v = arr[low]; // 切分元素
+        while (true) {
+            // 扫描左右，检查扫描是否结束并交换元素
+            while (less(arr[++i], v)) {
+                if (i == high)
+                    break;
+            }
+
+            while (less(v, a[--j])) {
+                if (j == low)
+                    break;
+            }
+
+            if (i >= j) {
+                break;
+            }
+            exch(arr, i, j);
+        }
+        exch(arr, low, j);
+        return j;
+    }
 }
 
 class Quick3way extends baseSort {
